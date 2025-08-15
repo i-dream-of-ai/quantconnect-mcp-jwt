@@ -28,6 +28,5 @@ RUN useradd -r -s /bin/false mcpuser && \
     chown -R mcpuser:mcpuser /app /home/mcpuser
 USER mcpuser
 
-# Run the HTTP health check server (for DigitalOcean)
-# The actual MCP server will be started separately via supervisor or as a sidecar
-CMD ["uv", "run", "python", "src/http_server.py"]
+# Run the remote MCP server with JWT auth at transport layer
+CMD ["uv", "run", "python", "src/remote_server.py"]
