@@ -28,5 +28,5 @@ RUN useradd -r -s /bin/false mcpuser && \
     chown -R mcpuser:mcpuser /app /home/mcpuser
 USER mcpuser
 
-# Run the remote MCP server with JWT auth at transport layer
-CMD ["uv", "run", "python", "src/remote_server.py"]
+# Run the SSE MCP server with JWT auth
+CMD ["uv", "run", "python", "src/mcp_sse_server.py"]
