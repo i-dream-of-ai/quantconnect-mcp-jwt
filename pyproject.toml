@@ -8,7 +8,9 @@ dependencies = [
     "python-dotenv>=0.23.0",
     "httpx>=0.28.1",
     "mcp[cli]>=1.9.3",
-    "requests"
+    "requests",
+    "PyJWT>=2.8.0",
+    "cryptography>=42.0.0"
 ]
 
 [tool.pytest.ini_options]
