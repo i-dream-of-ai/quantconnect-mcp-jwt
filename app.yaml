@@ -1,0 +1,20 @@
+name: ledgai-quantconnect-mcp
+region: nyc
+services:
+- name: mcp-server
+  dockerfile_path: Dockerfile.jwt
+  source_dir: .
+  github:
+    repo: i-dream-of-ai/quantconnect-mcp-fork
+    branch: main
+    deploy_on_push: true
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  http_port: 8080
+  envs:
+  - key: ENABLE_AUTH
+    value: "true"
+    scope: RUN_TIME
+  - key: PYTHONPATH
+    value: "/app/src"
+    scope: RUN_TIME
