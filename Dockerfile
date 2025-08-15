@@ -14,9 +14,6 @@ COPY pyproject.toml .
 RUN uv lock
 RUN uv sync --frozen
 
-# Install additional dependencies directly with pip
-RUN /app/.venv/bin/pip install PyJWT cryptography
-
 # Copy source code
 COPY src/ src/
 
@@ -25,10 +22,11 @@ ENV PYTHONPATH=/app/src
 ENV MCP_TRANSPORT=stdio
 ENV ENABLE_AUTH=true
 
-# Create non-root user for security
+# Create non-root user for security and setup cache directory
 RUN useradd -r -s /bin/false mcpuser && \
-    chown -R mcpuser:mcpuser /app
+    mkdir -p /home/mcpuser/.cache && \
+    chown -R mcpuser:mcpuser /app /home/mcpuser
 USER mcpuser
 
-# Run the enhanced server with JWT authentication using the venv python
-CMD ["/app/.venv/bin/python", "src/main_jwt.py"]
+# Run the server using uv run (JWT auth will be added via proxy layer)
+CMD ["uv", "run", "python", "src/main.py"]
