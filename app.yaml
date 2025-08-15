@@ -18,3 +18,15 @@ services:
   - key: PYTHONPATH
     value: "/app/src"
     scope: RUN_TIME
+  - key: JWT_SECRET_KEY
+    value: "dev-secret-key-change-in-production"
+    scope: RUN_TIME
+  - key: QUANTCONNECT_USER_ID
+    value: "406922"
+    scope: RUN_TIME
+  - key: QUANTCONNECT_TOKEN
+    value: "428ff4953fc81908d3816549d6d65c8910032b111159b7cdb5b03c829713724d"
+    scope: RUN_TIME
+  - key: QUANTCONNECT_ORGANIZATION_ID
+    value: "c6880779be8442f9147fd531ddc7bc75"
+    scope: RUN_TIME
