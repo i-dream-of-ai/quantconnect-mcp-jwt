@@ -61,7 +61,7 @@ def verify_token(credentials: Optional[HTTPAuthorizationCredentials] = Depends(s
         raise HTTPException(status_code=401, detail="Token expired")
     except jwt.InvalidTokenError as e:
         print(f"DEBUG: Invalid token: {e}")
-        raise HTTPException(status_code=401, detail="Invalid token")
+        raise HTTPException(status_code=401, detail=f"Invalid token: {str(e)[:100]} | Secret: {JWT_SECRET_KEY[:10]}...")
 
 @app.get("/")
 async def root():
