@@ -28,5 +28,6 @@ RUN useradd -r -s /bin/false mcpuser && \
     chown -R mcpuser:mcpuser /app /home/mcpuser
 USER mcpuser
 
-# Run the server using uv run (JWT auth will be added via proxy layer)
-CMD ["uv", "run", "python", "src/main.py"]
+# Run the HTTP health check server (for DigitalOcean)
+# The actual MCP server will be started separately via supervisor or as a sidecar
+CMD ["uv", "run", "python", "src/http_server.py"]
