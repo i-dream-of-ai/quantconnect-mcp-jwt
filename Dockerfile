@@ -4,11 +4,18 @@ FROM python:3.11-slim
 # Set working directory
 WORKDIR /app
 
-# Install uv and dependencies
-RUN pip install uv PyJWT cryptography
+# Install uv
+RUN pip install uv
 
 # Copy dependency files
 COPY pyproject.toml .
+
+# Generate lock file and install dependencies
+RUN uv lock
+RUN uv sync --frozen
+
+# Install additional dependencies directly with pip
+RUN /app/.venv/bin/pip install PyJWT cryptography
 
 # Copy source code
 COPY src/ src/
@@ -23,5 +30,5 @@ RUN useradd -r -s /bin/false mcpuser && \
     chown -R mcpuser:mcpuser /app
 USER mcpuser
 
-# Run the enhanced server with JWT authentication
-CMD ["python", "src/main_jwt.py"]
+# Run the enhanced server with JWT authentication using the venv python
+CMD ["/app/.venv/bin/python", "src/main_jwt.py"]
