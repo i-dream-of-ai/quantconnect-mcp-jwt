@@ -59,7 +59,7 @@ class JWTAuthenticator:
             issuer: Expected token issuer
             audience: Expected token audience
         """
-        self.secret_key = secret_key or os.getenv('JWT_SECRET_KEY')
+        self.secret_key = secret_key or os.getenv('JWT_SECRET_KEY') or 'dev-secret-key-change-in-production'
         if not self.secret_key:
             raise ValueError("JWT_SECRET_KEY environment variable or secret_key parameter required")
             
