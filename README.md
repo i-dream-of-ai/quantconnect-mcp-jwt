@@ -1146,3 +1146,4 @@ Search for content in QuantConnect.
 ### Inspector
  To start the inspector, run `npx @modelcontextprotocol/inspector uv run src/main.py`.
  To pass a model to the inspector tool, use JSON (for example, `{"name":"My Project","language":"Py"}`).
+# Force redeploy Thu Aug 14 23:50:18 PDT 2025
