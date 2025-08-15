@@ -41,7 +41,12 @@ def verify_token(credentials: Optional[HTTPAuthorizationCredentials] = Depends(s
         )
     
     try:
+        print(f"DEBUG: Attempting to decode token with secret: {JWT_SECRET_KEY[:10]}...")
+        print(f"DEBUG: Token first 50 chars: {credentials.credentials[:50]}...")
+        
         payload = jwt.decode(credentials.credentials, JWT_SECRET_KEY, algorithms=[JWT_ALGORITHM])
+        
+        print(f"DEBUG: Token decoded successfully: {payload.get('sub', 'no-sub')}")
         
         # Set QuantConnect credentials from token
         if "qc_credentials" in payload:
@@ -51,9 +56,11 @@ def verify_token(credentials: Optional[HTTPAuthorizationCredentials] = Depends(s
             os.environ["QUANTCONNECT_ORGANIZATION_ID"] = str(qc.get("organization_id", ""))
         
         return payload
-    except jwt.ExpiredSignatureError:
+    except jwt.ExpiredSignatureError as e:
+        print(f"DEBUG: Token expired: {e}")
         raise HTTPException(status_code=401, detail="Token expired")
-    except jwt.InvalidTokenError:
+    except jwt.InvalidTokenError as e:
+        print(f"DEBUG: Invalid token: {e}")
         raise HTTPException(status_code=401, detail="Invalid token")
 
 @app.get("/")
